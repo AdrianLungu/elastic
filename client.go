@@ -1311,6 +1311,10 @@ func (c *Client) Search(indices ...string) *SearchService {
 	return NewSearchService(c).Index(indices...)
 }
 
+func (c *Client) SearchWithClusters(indices ...string) *SearchWithClusters {
+	return NewSearchWithClustersService(c).Index(indices...)
+}
+
 // Suggest returns a service to return suggestions.
 func (c *Client) Suggest(indices ...string) *SuggestService {
 	return NewSuggestService(c).Index(indices...)
