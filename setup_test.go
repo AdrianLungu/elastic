@@ -5,13 +5,12 @@
 package elastic
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"math/rand"
 	"os"
 	"time"
-
-	"golang.org/x/net/context"
 )
 
 const (
@@ -46,7 +45,13 @@ const (
 					"type":"geo_point"
 				},
 				"suggest_field":{
-					"type":"completion"
+					"type":"completion",
+					"contexts":[
+						{
+							"name": "user_name",
+							"type": "category"
+						}
+					]
 				}
 			}
 		},

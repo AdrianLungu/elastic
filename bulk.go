@@ -6,11 +6,10 @@ package elastic
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"net/url"
-
-	"golang.org/x/net/context"
 
 	"gopkg.in/olivere/elastic.v5/uritemplates"
 )
@@ -235,7 +234,7 @@ func (s *BulkService) Do(ctx context.Context) (*BulkResponse, error) {
 	}
 
 	// Get response
-	res, err := s.client.PerformRequest(ctx, "POST", path, params, body)
+	res, err := s.client.PerformRequestWithContentType(ctx, "POST", path, params, body, "application/x-ndjson")
 	if err != nil {
 		return nil, err
 	}
@@ -301,13 +300,15 @@ type BulkResponse struct {
 
 // BulkResponseItem is the result of a single bulk request.
 type BulkResponseItem struct {
-	Index   string        `json:"_index,omitempty"`
-	Type    string        `json:"_type,omitempty"`
-	Id      string        `json:"_id,omitempty"`
-	Version int64         `json:"_version,omitempty"`
-	Status  int           `json:"status,omitempty"`
-	Found   bool          `json:"found,omitempty"`
-	Error   *ErrorDetails `json:"error,omitempty"`
+	Index         string        `json:"_index,omitempty"`
+	Type          string        `json:"_type,omitempty"`
+	Id            string        `json:"_id,omitempty"`
+	Version       int64         `json:"_version,omitempty"`
+	Status        int           `json:"status,omitempty"`
+	Result        string        `json:"result,omitempty"`
+	ForcedRefresh bool          `json:"forced_refresh,omitempty"`
+	Found         bool          `json:"found,omitempty"`
+	Error         *ErrorDetails `json:"error,omitempty"`
 }
 
 // Indexed returns all bulk request results of "index" actions.

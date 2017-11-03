@@ -5,13 +5,12 @@
 package elastic
 
 import (
+	"context"
 	"errors"
 	"net/http"
 	"sync/atomic"
 	"testing"
 	"time"
-
-	"golang.org/x/net/context"
 )
 
 type testRetrier struct {
@@ -110,7 +109,7 @@ func TestRetrierWithError(t *testing.T) {
 
 	res, err := client.PerformRequest(context.TODO(), "GET", "/fail", nil, nil)
 	if err != kaboom {
-		t.Fatal("expected %v, got %v", kaboom, err)
+		t.Fatalf("expected %v, got %v", kaboom, err)
 	}
 	if res != nil {
 		t.Fatal("expected no response")

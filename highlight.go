@@ -32,10 +32,7 @@ type Highlight struct {
 
 func NewHighlight() *Highlight {
 	hl := &Highlight{
-		fields:        make([]*HighlighterField, 0),
-		preTags:       make([]string, 0),
-		postTags:      make([]string, 0),
-		options:       make(map[string]interface{}),
+		options: make(map[string]interface{}),
 	}
 	return hl
 }
@@ -102,7 +99,7 @@ func (hl *Highlight) BoundaryMaxScan(boundaryMaxScan int) *Highlight {
 }
 
 func (hl *Highlight) BoundaryChars(boundaryChars string) *Highlight {
-	hl.boundaryChars = &boundaryChars //append(hl.boundaryChars, boundaryChars...)
+	hl.boundaryChars = &boundaryChars
 	return hl
 }
 
@@ -179,7 +176,7 @@ func (hl *Highlight) Source() (interface{}, error) {
 		source["boundary_max_scan"] = *hl.boundaryMaxScan
 	}
 	if hl.boundaryChars != nil {
-		source["boundary_chars"] = hl.boundaryChars
+		source["boundary_chars"] = *hl.boundaryChars
 	}
 	if hl.highlighterType != nil {
 		source["type"] = *hl.highlighterType

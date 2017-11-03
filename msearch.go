@@ -5,12 +5,11 @@
 package elastic
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/url"
 	"strings"
-
-	"golang.org/x/net/context"
 )
 
 // MultiSearch executes one or more searches in one roundtrip.
@@ -69,7 +68,7 @@ func (s *MultiSearchService) Do(ctx context.Context) (*MultiSearchResult, error)
 		if err != nil {
 			return nil, err
 		}
-		body, err := json.Marshal(sr.body())
+		body, err := json.Marshal(sr.Body())
 		if err != nil {
 			return nil, err
 		}
